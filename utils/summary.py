@@ -530,12 +530,12 @@ def plot_past_30_days_reading(conn):
         # Query for time spent reading over the past 30 days, adjusted for the system timezone
         past_30_days_query = f"""
             SELECT 
-                date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) AS reading_date,
+                date(datetime(psd.start_time, 'unixepoch', 0 || ' seconds')) AS reading_date,
                 SUM(psd.duration) / 60.0 AS minutes_read
             FROM page_stat_data psd
-            WHERE date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) >= date('now', '-30 days', '{local_offset_seconds} seconds') and psd.id_book != 10 
-            GROUP BY reading_date
-            ORDER BY reading_date;
+            WHERE 
+                reading_date >= date('now', '-30 days', 0 || ' seconds')
+                AND psd.id_book != 10 
         """
         cursor = conn.cursor()
         cursor.execute(past_30_days_query)
