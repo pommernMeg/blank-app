@@ -127,7 +127,8 @@ def plot_books_read_per_month(conn):
             COUNT(DISTINCT b.title) AS books_read
         FROM page_stat_data psd
         JOIN book b ON psd.id_book = b.id
-        WHERE strftime('%Y', datetime(psd.start_time, 'unixepoch', 'localtime')) = '{year}'
+        WHERE strftime('%Y', datetime(psd.start_time, 'unixepoch', 'localtime')) = '{year}' and
+        b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') and b.id != 10
         GROUP BY month
         ORDER BY month;
     """
