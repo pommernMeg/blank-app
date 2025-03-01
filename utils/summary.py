@@ -153,7 +153,7 @@ def plot_books_read_per_month(conn):
 def plot_book_completion_over_time(conn):
     """Plot a graph of book completion over time for a selected book."""
     # Query to get the list of books
-    book_query = "SELECT id, title FROM book ORDER BY title;"
+    book_query = "SELECT id, title FROM book b where b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') and b.id != 10 ORDER BY title;"
     cursor = conn.cursor()
     cursor.execute(book_query)
     books = cursor.fetchall()
