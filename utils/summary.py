@@ -28,6 +28,7 @@ def create_books_read_summary(conn):
             SUM(psd.duration) AS total_time_spent
         FROM page_stat_data psd
         JOIN book b ON psd.id_book = b.id
+        where b.title is not like "%KOReader Quickstart Guide%"
         GROUP BY b.title
         ORDER BY total_pages_read DESC;
     """
