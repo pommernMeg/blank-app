@@ -26,7 +26,7 @@ def create_books_read_summary(conn):
                 date(datetime(psd.start_time, 'unixepoch', 0 || ' seconds')) AS reading_date,
                 SUM(psd.duration) / 60.0 AS minutes_read
             FROM page_stat_data psd 
-			WHERE date(datetime(psd.start_time, 'unixepoch', '0 seconds')) >= date('now', '-30 days', '0 seconds') and psd.id_book NOT IN (1, 3 , 10) 
+			WHERE date(datetime(psd.start_time, 'unixepoch',  0 || ' seconds')) >= date('now', '-30 days',  0 || ' seconds') and psd.id_book NOT IN (1, 3 , 10) 
             GROUP BY reading_date
             ORDER BY reading_date;
     """
