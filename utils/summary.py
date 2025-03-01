@@ -533,7 +533,7 @@ def plot_past_30_days_reading(conn):
                 date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) AS reading_date,
                 SUM(psd.duration) / 60.0 AS minutes_read
             FROM page_stat_data psd
-            WHERE date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) >= date('now', '-30 days', '{local_offset_seconds} seconds') and psd.id != 10 
+            WHERE date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) >= date('now', '-30 days', '{local_offset_seconds} seconds') and psd.id_book != 10 
             GROUP BY reading_date
             ORDER BY reading_date;
         """
