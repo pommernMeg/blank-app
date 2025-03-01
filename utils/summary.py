@@ -45,8 +45,7 @@ def create_books_read_summary(conn):
     df_books["Total Time (hours)"] = df_books["Total Time Spent"].apply(lambda x: f"{x // 3600}:{(x % 3600) // 60:02d}")  # Assuming milliseconds
     
     # Calculate average reading speed (pages/hour)
-    hours = df_books["Total Time Spent"] / (1000 * 60 * 60)
-    df_books["Average Reading Speed (pages/hour)"] = (df_books['Total Pages Read'] * 3600) / df_books["Total Time (raw units)"].round(2)
+    df_books["Average Reading Speed (pages/hour)"] = (df_books['Total Pages Read'] * 3600) / df_books["Total Time (raw units)"].round(1)
 
     st.write("### Books Read Summary")
     st.dataframe(df_books[[
