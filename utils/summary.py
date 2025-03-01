@@ -66,13 +66,15 @@ def create_year_in_review_summary(conn):
     year = datetime.now().year
     query = f"""
         SELECT 
-            COUNT(DISTINCT date(datetime(psd.start_time, 'unixepoch', 'localtime'))) AS unique_days_reading,
-            COUNT(DISTINCT b.id) AS books_completed,
-            SUM(psd.duration) / 3600.0 AS total_hours_reading,
-            COUNT(DISTINCT psd.page) AS total_pages_read
+            count(DISTINCT(date(datetime(psd.start_time, 'unixepoch', 'localtime')))) AS unique_days_reading,
+			COUNT(DISTINCT b.id) AS books_completed,
+			SUM(DISTINCT(b.total_read_time)) / (3600) AS total_hours_reading,
+            sum(distinct( b.total_read_pages)) AS total_pages_read
         FROM page_stat_data psd
         JOIN book b ON psd.id_book = b.id
-        WHERE strftime('%Y', datetime(psd.start_time, 'unixepoch', 'localtime')) = '{year}';
+        WHERE strftime('%Y', datetime(psd.start_time, 'unixepoch', 'localtime')) = '{year}' and
+        b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') and b.id != 10
+		ORDER by unique_days_reading
     """
     cursor = conn.cursor()
     cursor.execute(query)
