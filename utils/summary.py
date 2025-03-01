@@ -203,7 +203,7 @@ def plot_book_completion_over_time(conn):
 def plot_book_completion_over_time(conn):
     """Plot a graph of book completion percentage over time for a selected book."""
     # Query to get the list of books
-    book_query = "SELECT id, title FROM book ORDER BY title;"
+    book_query = "SELECT id, title FROM book b where b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') and b.id != 10  ORDER BY title;"
     cursor = conn.cursor()
     cursor.execute(book_query)
     books = cursor.fetchall()
@@ -295,7 +295,7 @@ def plot_book_completion_over_time(conn):
 def plot_completion_vs_cumulative_time(conn):
     """Plot a graph of completion percentage vs. cumulative time spent reading in hours."""
     # Query to get the list of books
-    book_query = "SELECT id, title FROM book ORDER BY title;"
+    book_query = "SELECT id, title FROM book b where b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') and b.id != 10 ORDER BY title;"
     cursor = conn.cursor()
     cursor.execute(book_query)
     books = cursor.fetchall()
@@ -533,7 +533,7 @@ def plot_past_30_days_reading(conn):
                 date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) AS reading_date,
                 SUM(psd.duration) / 60.0 AS minutes_read
             FROM page_stat_data psd
-            WHERE date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) >= date('now', '-30 days', '{local_offset_seconds} seconds')
+            WHERE date(datetime(psd.start_time, 'unixepoch', '{local_offset_seconds} seconds')) >= date('now', '-30 days', '{local_offset_seconds} seconds') and psd.id != 10 
             GROUP BY reading_date
             ORDER BY reading_date;
         """
