@@ -81,7 +81,7 @@ def create_year_in_review_summary(conn):
     results = cursor.fetchone()
 
     unique_days_reading, books_completed, total_hours_reading, total_pages_read = results
-    avg_time_per_day = total_hours_reading * 60 / unique_days_reading if unique_days_reading else 0
+    avg_time_per_day = total_hours_reading / unique_days_reading if unique_days_reading else 0
     avg_pages_per_day = total_pages_read / unique_days_reading if unique_days_reading else 0
     avg_reading_speed = total_pages_read / total_hours_reading if total_hours_reading else 0
     avg_days_to_complete_book = unique_days_reading / books_completed if books_completed else 0
