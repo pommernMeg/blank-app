@@ -28,7 +28,7 @@ def create_books_read_summary(conn):
             SUM(psd.duration) AS total_time_spent
         FROM page_stat_data psd
         JOIN book b ON psd.id_book = b.id
-        WHERE b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') 
+        WHERE b.title NOT IN ('KOReader Quickstart Guide', 'Necroscope 003: Blutmesse') and b.id != 10
         GROUP BY b.title
         ORDER BY total_pages_read DESC;
     """
